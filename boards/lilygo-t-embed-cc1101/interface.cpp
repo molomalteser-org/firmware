@@ -6,7 +6,7 @@
 #include "modules/rf/rf_utils.h"
 
 // CyberPi spezifisch: AW9523 Expander
-#include "HAL/io_expander/io_expander.h"
+#include <io_expander.h>
 extern io_expander io_ext; 
 
 /***************************************************************************************
