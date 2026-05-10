@@ -46,4 +46,15 @@
 #include "../ESP32-C5-tft/pins_arduino.h"
 #elif ESP32C5_DEVKITC_1
 #include "../ESP32-C5/pins_arduino.h"
+#ifdef T_DISPLAY_S3
+#include "../lilygo-t-display-s3/pins_arduino.h"
+// ... (deine anderen Boards)
+#elif ESP32C5_DEVKITC_1_TFT
+#include "../ESP32-C5-tft/pins_arduino.h"
+#elif ESP32C5_DEVKITC_1
+#include "../ESP32-C5/pins_arduino.h"
+// --- HIER CYBERPI HINZUFÜGEN ---
+#elif CYBERPI
+#include "../CyberPi/pins_arduino.h"
 #endif
+
