@@ -4,13 +4,19 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - '**.cpp'
+      - '**.h'
+      - '**.ini'
+      - '.github/workflows/Cyberpi.yml'
+  workflow_dispatch: # Erlaubt den manuellen Start unter dem "Actions" Tab
 
 jobs:
-  build:
+  build_cyberpi:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -23,13 +29,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install platformio
 
-      - name: Build Firmware
-        run: pio run -e CYD-2USB
+      - name: Run PlatformIO Build
+        # Wir nutzen genau den Namen aus deiner [env:CyberPi] Definition
+        run: pio run -e CyberPi
 
-      - name: Upload Artifact
+      - name: Upload Firmware Binary
         uses: actions/upload-artifact@v4
         with:
-          name: Bruce-CyberPi-Bin
+          name: Bruce-CyberPi-v1
           path: |
-            .pio/build/CYD-2USB/firmware.bin
-            Bruce-*.bin
+            .pio/build/CyberPi/firmware.bin
+            .pio/build/CyberPi/partitions.bin
