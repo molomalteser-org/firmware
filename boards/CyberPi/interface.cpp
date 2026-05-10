@@ -5,7 +5,8 @@
 #include <globals.h>
 
 // CyberPi nutzt den AW9523 Expander für fast alles
-#include <io_expander.h>
+#include "HAL/io_expander/io_expander.h"
+
 extern io_expander io_ext; 
 
 /***************************************************************************************
