@@ -4,20 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '**.cpp'
-      - '**.h'
-      - '**.ini'
-      - '.github/workflows/cyberpi.yml'
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch: # Erlaubt das manuelle Starten des Builds
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,23 +16,20 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.13'
 
       - name: Install PlatformIO
         run: |
           python -m pip install --upgrade pip
           pip install platformio
 
-      - name: Build Firmware for CyberPi (CYD-2USB)
+      - name: Build Firmware
         run: pio run -e CYD-2USB
 
-      - name: Upload Build Artifact
-        uses: upload-artifact@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: Bruce-CyberPi-Firmware
+          name: Bruce-CyberPi-Bin
           path: |
             .pio/build/CYD-2USB/firmware.bin
-            .pio/build/CYD-2USB/partitions.bin
-            /Users/marlin/firmware/Bruce-CYD-2USB.bin
-          # Hinweis: Der Pfad zum fertigen Merge-Bin hängt davon ab, 
-          # wo PlatformIO es im Runner ablegt. Meistens ist es im Projekt-Root.
+            Bruce-*.bin
